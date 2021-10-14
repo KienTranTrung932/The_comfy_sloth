@@ -11,14 +11,14 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_SAN_PHAM) {
-    let maxPrice = action.payload.map((p) => p.price)
+    let maxPrice = action.payload.map((p) => p.dongianiemyet)
     maxPrice = Math.max(...maxPrice)
 
     return {
       ...state,
       all_products: [...action.payload],
       filtered_products: [...action.payload],
-      filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
+      filters: { ...state.filters, max_price: maxPrice, dongianiemyet: maxPrice },
     }
   }
   if (action.type === SET_GRIDVIEW) {
@@ -35,26 +35,26 @@ const filter_reducer = (state, action) => {
     let tempProducts = [...filtered_products]
     if (sort === 'price-lowest') {
       tempProducts = tempProducts.sort((a, b) => {
-        if (a.price < b.price) {
+        if (a.dongianiemyet < b.dongianiemyet) {
           return -1
         }
-        if (a.price > b.price) {
+        if (a.dongianiemyet > b.dongianiemyet) {
           return 1
         }
         return 0
       })
     }
     if (sort === 'price-highest') {
-      tempProducts = tempProducts.sort((a, b) => b.price - a.price)
+      tempProducts = tempProducts.sort((a, b) => b.dongianiemyet - a.dongianiemyet)
     }
     if (sort === 'name-a') {
       tempProducts = tempProducts.sort((a, b) => {
-        return a.name.localeCompare(b.name)
+        return a.tensp.localeCompare(b.tensp)
       })
     }
     if (sort === 'name-z') {
       tempProducts = tempProducts.sort((a, b) => {
-        return b.name.localeCompare(a.name)
+        return b.tensp.localeCompare(a.tensp)
       })
     }
     return { ...state, filtered_products: tempProducts }
@@ -65,14 +65,14 @@ const filter_reducer = (state, action) => {
   }
   if (action.type === LOC_SAN_PHAM) {
     const { all_products } = state
-    const { text, category, company, color, price, shipping } = state.filters
+    const { text, category, company, mausac, dongianiemyet, shipping } = state.filters
 
     let tempProducts = [...all_products]
     // filtering
     // text
     if (text) {
       tempProducts = tempProducts.filter((product) => {
-        return product.name.toLowerCase().startsWith(text)
+        return product.tensp .toLowerCase().startsWith(text)
       })
     }
     // category
@@ -88,13 +88,13 @@ const filter_reducer = (state, action) => {
       )
     }
     // colors
-    if (color !== 'all') {
+    if (mausac !== 'all') {
       tempProducts = tempProducts.filter((product) => {
-        return product.colors.find((c) => c === color)
+        return product.mausac.find((c) => c === mausac)
       })
     }
     // price
-    tempProducts = tempProducts.filter((product) => product.price <= price)
+    tempProducts = tempProducts.filter((product) => product.dongianiemyet <= dongianiemyet)
     // shipping
     if (shipping) {
       tempProducts = tempProducts.filter((product) => product.shipping === true)
@@ -110,8 +110,8 @@ const filter_reducer = (state, action) => {
         text: '',
         company: 'all',
         category: 'all',
-        color: 'all',
-        price: state.filters.max_price,
+        mausac : 'all',
+        dongianiemyet: state.filters.max_price,
         shipping: false,
       },
     }

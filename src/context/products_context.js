@@ -40,10 +40,12 @@ export const ProductsProvider = ({ children }) => {
     dispatch({ type:  BAT_DAU_LAY_SAN_PHAM})
     try {
       const response = await axios.get(url)
-      const products = response.data
+      const products = response.data.results
+
       dispatch({ type: LAY_SAN_PHAM_THANH_CONG, payload: products })
     } catch (error) {
       dispatch({ type: LAY_SAN_PHAM_THAT_BAI })
+      console.log(error)
     }
   }
 
@@ -51,7 +53,8 @@ export const ProductsProvider = ({ children }) => {
     dispatch({ type: BAT_DAU_LAY_CHI_TIET_SAN_PHAM })
     try {
       const response = await axios.get(url)
-      const singleProduct = response.data
+      const singleProduct = response.data.results
+      console.log(singleProduct);
       dispatch({ type: LAY_CHI_TIET_SAN_PHAM_THANH_CONG, payload: singleProduct })
     } catch (error) {
       dispatch({ type:  LOI_LAY_CHI_TIET_SAN_PHAM })

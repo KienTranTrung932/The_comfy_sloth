@@ -26,6 +26,7 @@ const SingleProductPage = () => {
 
   useEffect(() => {
     layChiTietSanPham(`${url}${id}`)
+    console.log(layChiTietSanPham)
     // eslint-disable-next-line
   }, [id])
 
@@ -45,30 +46,30 @@ const SingleProductPage = () => {
     return <Error />
   }
   const {
-    name,
-    price,
-    description,
+    tensp ,
+    dongianiemyet,
+    mota,
     stock,
-    stars,
-    reviews,
+    // stars,
+    // reviews,
     id: sku,
-    company,
-    images,
+    // company,
+    hinhsp,
   } = product
   return (
     <Wrapper>
-      <PageHero title={name} product />
+      <PageHero title={tensp} product />
       <div className='section section-center page'>
         <Link to='/SanPham' className='btn'>
           Trở về trang sản phẩm
         </Link>
         <div className=' product-center'>
-          <ProductImages images={images} />
+          <ProductImages images={hinhsp} />
           <section className='content'>
-            <h2>{name}</h2>
-            <Stars stars={stars} reviews={reviews} />
-            <h5 className='price'> {formatPrice(price)}</h5>
-            <p className='desc'> {description}</p>
+            <h2>{tensp}</h2>
+            {/* <Stars stars={stars} reviews={reviews} /> */}
+            <h5 className='price'> {formatPrice(dongianiemyet)}</h5>
+            <p className='desc'> {mota}</p>
             <p className='info'>
               <span>Có sẵn : </span>
               {stock > 0 ? 'In stock' : 'out of stock'}
@@ -77,10 +78,10 @@ const SingleProductPage = () => {
               <span>Mã kho: </span>
               {sku}
             </p>
-            <p className='info'>
+            {/* <p className='info'>
               <span>Công ty: </span>
               {company}
-            </p>
+            </p> */}
             <hr />
             {stock > 0 && <AddToCart product={product} />}
           </section>

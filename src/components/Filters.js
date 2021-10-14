@@ -8,11 +8,11 @@ const Filters = () => {
   const {
     filters :{
       text, 
-      category,
+      // category,
       company,
-      color,
+      color ,
       min_price,
-      price,
+      dongianiemyet,
       max_price,
       shipping,
     },
@@ -42,7 +42,7 @@ const Filters = () => {
           </div>
            {/* end search input */}
            {/* {categories} */}
-           <div className='form-control'>
+           {/* <div className='form-control'>
              <h5>Loại sản phẩm</h5>
              <div>{
                categories.map((c,index)=>{
@@ -56,7 +56,7 @@ const Filters = () => {
                  >{c}</button>
                })}
                </div>
-           </div>
+           </div> */}
            {/* {end of categories} */}
 
            {/* {companies} */}
@@ -83,7 +83,7 @@ const Filters = () => {
                colors.map((c,index)=>{
                  if(c === 'all'){
                    return <button 
-                   name='color' 
+                   name='mausac' 
                    onClick = {updateBoLoc} 
                    data-color='all'
                    className={`${color === 'all' ? 'all-btn active':'all-btn'
@@ -111,20 +111,22 @@ const Filters = () => {
              </div>
            </div>
            {/* {end of colors} */}
+
            {/* {price} */}
            <div className='form-control'>
              <h5>Giá</h5>
-             <p className='price'>{formatPrice((price))}</p>
+             <p className='price'>{formatPrice((dongianiemyet))}</p>
              <input 
              type='range' 
-             name='price' 
+             name='dongianiemyet' 
              onChange={updateBoLoc}
              min = {min_price}
              max = {max_price}
-             value = {price}
+             value = {dongianiemyet}
              ></input>
            </div>
            {/* {end of price} */}
+           
            {/* {shipping} */}
            <div className='form-control shipping'>
                <label htmlFor='shipping'>free shipping</label>

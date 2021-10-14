@@ -21,10 +21,10 @@ const initialState = {
     text: '',
     company: 'all',
     category: 'all',
-    color: 'all',
+    mausac: 'all',
     min_price: 0,
     max_price: 0,
-    price: 0,
+    donggianiemyet: 0,
     shipping: false,
   },
 }
@@ -68,7 +68,7 @@ export const FilterProvider = ({ children }) => {
       value = e.target.textContent
     }
     if (name === 'color') {
-      value = e.target.dataset.color
+      value = e.target.dataset.mausac
     }
     if (name === 'price') {
       value = Number(value)
