@@ -6,12 +6,11 @@ import { FaTimes } from 'react-icons/fa'
 import { links } from '../utils/constants'
 import styled from 'styled-components'
 import CartButtons from './CartButtons'
-import { useUserContext } from '../context/user_context'
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useProductsContext()
-  const {myUser} = useUserContext()
-
+  const user = useSelector((state) => state.user.user);
   return (
     <SidebarContainer>
       <aside
@@ -33,12 +32,18 @@ const Sidebar = () => {
               </li>
             )
           })}
-          {myUser && (
+          {user !== null ? (
             <li>
               <Link to='/ThanhToan' onClick={closeSidebar}>
                 Thanh toán
               </Link>
             </li>
+          ):(
+            <li>
+            <Link to='/DangKy' onClick={closeSidebar}>
+              Đăng ký
+            </Link>
+          </li>
           )}
         </ul>
         <CartButtons />

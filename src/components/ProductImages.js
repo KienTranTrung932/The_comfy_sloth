@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useProductsContext } from '../context/products_context'
+// const ProductImages = ({images=[{url: ''}]}) => {
+  const ProductImages = () => {
+  // const[main,setMain]=useState(images[0])
+  const {
+    single_product: product,
 
-const ProductImages = ({images=[{url: ''}]}) => {
-  const[main,setMain]=useState(images[0])
-  
+  } = useProductsContext()
+  const {
+    hinhanh
+  }=product
   return (
     <Wrapper>
-      <img src={main.url} alt='main ' className='main'/>
-      <div className='gallery'>
+      <img src={hinhanh} alt='main ' className='main'/>
+      {/* <div className='gallery'>
         {images.map((image,index)=>{
           return(
           <img 
@@ -18,7 +25,7 @@ const ProductImages = ({images=[{url: ''}]}) => {
             className={`${image.url === main.url? 'active' : null}`}
           />)
         })}
-      </div>
+      </div> */}
     </Wrapper>
   )
 }

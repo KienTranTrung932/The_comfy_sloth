@@ -32,10 +32,10 @@ export const CartProvider = ({ children }) => {
   const [state,dispatch]=useReducer(reducer,initialState)
 
   //add to cart 
-  const themVaoGio =(id,color,amount,product)=>{
+  const themVaoGio =(id,amount,product)=>{
     dispatch({
       type:THEM_VAO_GIO, 
-      payload: {id,color,amount,product}
+      payload: {id,amount,product}
     })
   }
   //remove item

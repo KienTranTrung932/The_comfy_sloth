@@ -4,7 +4,7 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = ({id,image,name,color,price,amount}) => {
+const CartItem = ({id,hinhanh,tensp,dongianiemyet,amount}) => {
   const {xoaHang, thayDoiSoLuong} = useCartContext()
   const increase =()=>{
     thayDoiSoLuong(id,'inc')
@@ -16,19 +16,19 @@ const CartItem = ({id,image,name,color,price,amount}) => {
   return (
     <Wrapper>
       <div className='title'>
-        <img src={image} alt={name} />
+        <img src={hinhanh} alt={tensp} />
         <div>
-          <h5 className='name'>{name}</h5>
-          <p className='color'>
+          <h5 className='name'>{tensp}</h5>
+          {/* <p className='color'>
             màu sắc : <span style={{ background: color }}></span>
-          </p>
-          <h5 className='price-small'>{formatPrice(price)}</h5>
+          </p> */}
+          <h5 className='price-small'>{formatPrice(dongianiemyet)}</h5>
         </div>
       </div>
-      <h5 className='price'>{formatPrice(price)}</h5>
+      <h5 className='price'>{formatPrice(dongianiemyet)}</h5>
       <AmountButtons amount={amount} increase={increase} decrease={decrease}/>
       <h5 className='subtotal'>
-        {formatPrice(price * amount)}
+        {formatPrice(dongianiemyet * amount)}
       </h5>
       <button type='button' className='remove-btn' onClick={()=>xoaHang(id)}><FaTrash/></button>
     </Wrapper>

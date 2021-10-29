@@ -1,47 +1,83 @@
-import React from 'react'
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'  
-import { useProductsContext } from '../context/products_context'
-import { useCartContext } from '../context/cart_context'
-import { useUserContext } from '../context/user_context'
-import { CLEAR_CART } from '../actions'
+import React from "react";
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useProductsContext } from "../context/products_context";
+import { useCartContext } from "../context/cart_context";
+import { useSelector } from "react-redux";
+import cookies from "react-cookies";
+import { logoutUser } from "../ActionCreators/UserCreators";
+import { useDispatch } from "react-redux";
 
 const CartButtons = () => {
-  const {closeSideBar} = useProductsContext()
-  const {total_items,xoaGioHang} = useCartContext()
-  const {loginWithRedirect,myUser,logout} = useUserContext()
-  return(
-    <Wrapper className='cart-btn-wrapper'>
-      <Link to='/GioHang' className='cart-btn' onClick={closeSideBar}>
-        Giỏ
-        <span className='cart-container'>
-          <FaShoppingCart/>
-          <span className='cart-value'>{total_items}</span>
+  const { closeSideBar } = useProductsContext();
+  const { total_items, xoaGioHang } = useCartContext();
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const logout = (event) => {
+    // event.preventDefault()
+    cookies.remove("access_token");
+    cookies.remove("user");
+    dispatch(logoutUser())
+  };
+  let path = (
+    <>
+      <Link to="/DangNhap" className="cart-btn" onClick={closeSideBar}>
+        Login
+        <span className="cart-container">
+          <FaUserPlus />
         </span>
       </Link>
-      {myUser ? 
-      (
-        <button
+    </>
+  );
+  if (user !== null && user !== undefined) {
+    path = (
+      <>
+        <Link
+          to="/"
+          className="cart-btn"
+          onClick={() => {
+            xoaGioHang();
+            logout();
+          }}
+        >
+          Logout
+          <span className="cart-container">
+            <FaUserMinus />
+          </span>
+        </Link>
+      </>
+    );
+  }
+  return (
+    <Wrapper className="cart-btn-wrapper">
+      <Link to="/GioHang" className="cart-btn" onClick={closeSideBar}>
+        Giỏ
+        <span className="cart-container">
+          <FaShoppingCart />
+          <span className="cart-value">{total_items}</span>
+        </span>
+      </Link>
+      {path}
+      {/* {user == null ? (
+        <Link
           type='button'
           className='auth-btn'
           onClick={() => {
-            xoaGioHang()
-            logout({ returnTo: window.location.origin })
+            xoaGioHang ()
+            logout()
           }}
         >
-        Logout <FaUserMinus/> 
-      </button>
-      ):(
-        <button type='button' className='auth-btn' onClick={loginWithRedirect}>
-        Login
-        <FaUserPlus/>
-      </button>
-      )}
-      
+          Logout <FaUserMinus />
+        </Link>
+      ) : (
+        <Link type='button' className='auth-btn' linkto="/DangNhap">
+          Login <FaUserPlus />
+        </Link>
+      )} */}
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.div`
   display: grid;
@@ -58,7 +94,7 @@ const Wrapper = styled.div`
 
     align-items: center;
   }
-  .cart-container {
+   .cart-container {
     display: flex;
     align-items: center;
     position: relative;
@@ -95,5 +131,5 @@ const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-`
-export default CartButtons
+`;
+export default CartButtons;

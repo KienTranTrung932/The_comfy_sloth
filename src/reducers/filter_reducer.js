@@ -7,116 +7,128 @@ import {
   UPDATE_BO_LOC,
   LOC_SAN_PHAM,
   XOA_BO_LOC,
-} from '../actions'
+} from "../actions";
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_SAN_PHAM) {
-    let maxPrice = action.payload.map((p) => p.dongianiemyet)
-    maxPrice = Math.max(...maxPrice)
-
+    let maxPrice = action.payload.map((p) => p.dongianiemyet);
+    maxPrice = Math.max(...maxPrice);
+    // let categoryName = action.payload.map((p)=>p.tenloaihang)
     return {
       ...state,
       all_products: [...action.payload],
       filtered_products: [...action.payload],
-      filters: { ...state.filters, max_price: maxPrice, dongianiemyet: maxPrice },
-    }
+      filters: {
+        ...state.filters,
+        max_price: maxPrice,
+        dongianiemyet: maxPrice,
+        // loaihang:[categoryName],
+      },
+    };
   }
   if (action.type === SET_GRIDVIEW) {
-    return { ...state, grid_view: true }
+    return { ...state, grid_view: true };
   }
   if (action.type === SET_LISTVIEW) {
-    return { ...state, grid_view: false }
+    return { ...state, grid_view: false };
   }
   if (action.type === UPDATE_SORT) {
-    return { ...state, sort: action.payload }
+    return { ...state, sort: action.payload };
   }
-  if (action.type ===  SAP_XEP_SAN_PHAM) {
-    const { sort, filtered_products } = state
-    let tempProducts = [...filtered_products]
-    if (sort === 'price-lowest') {
+  if (action.type === SAP_XEP_SAN_PHAM) {
+    const { sort, filtered_products } = state;
+    let tempProducts = [...filtered_products];
+    if (sort === "price-lowest") {
       tempProducts = tempProducts.sort((a, b) => {
         if (a.dongianiemyet < b.dongianiemyet) {
-          return -1
+          return -1;
         }
         if (a.dongianiemyet > b.dongianiemyet) {
-          return 1
+          return 1;
         }
-        return 0
-      })
+        return 0;
+      });
     }
-    if (sort === 'price-highest') {
-      tempProducts = tempProducts.sort((a, b) => b.dongianiemyet - a.dongianiemyet)
+    if (sort === "price-highest") {
+      tempProducts = tempProducts.sort(
+        (a, b) => b.dongianiemyet - a.dongianiemyet
+      );
     }
-    if (sort === 'name-a') {
+    if (sort === "name-a") {
       tempProducts = tempProducts.sort((a, b) => {
-        return a.tensp.localeCompare(b.tensp)
-      })
+        return a.tensp.localeCompare(b.tensp);
+      });
     }
-    if (sort === 'name-z') {
+    if (sort === "name-z") {
       tempProducts = tempProducts.sort((a, b) => {
-        return b.tensp.localeCompare(a.tensp)
-      })
+        return b.tensp.localeCompare(a.tensp);
+      });
     }
-    return { ...state, filtered_products: tempProducts }
+    return { ...state, filtered_products: tempProducts };
   }
   if (action.type === UPDATE_BO_LOC) {
-    const { name, value } = action.payload
-    return { ...state, filters: { ...state.filters, [name]: value } }
+    const { name, value } = action.payload;
+    return { ...state, filters: { ...state.filters, [name]: value } };
   }
   if (action.type === LOC_SAN_PHAM) {
-    const { all_products } = state
-    const { text, category, company, mausac, dongianiemyet, shipping } = state.filters
+    const { all_products } = state;
+    const { text, company, dongianiemyet, shipping } =
+      state.filters;
 
-    let tempProducts = [...all_products]
+    let tempProducts = [...all_products];
     // filtering
     // text
     if (text) {
       tempProducts = tempProducts.filter((product) => {
-        return product.tensp .toLowerCase().startsWith(text)
-      })
+        return product.tensp.toLowerCase().startsWith(text);
+      });
     }
     // category
-    if (category !== 'all') {
-      tempProducts = tempProducts.filter(
-        (product) => product.category === category
-      )
-    }
+    // if (loaihang !== "all") {
+    //   tempProducts = tempProducts.filter(
+    //     (product) => product.loaihang === loaihang
+    //   );
+    // }
+
     // company
-    if (company !== 'all') {
+    if (company !== "all") {
       tempProducts = tempProducts.filter(
         (product) => product.company === company
-      )
+      );
     }
     // colors
-    if (mausac !== 'all') {
-      tempProducts = tempProducts.filter((product) => {
-        return product.mausac.find((c) => c === mausac)
-      })
-    }
+    // if (mausac !== 'all') {
+    //   tempProducts = tempProducts.filter((product) => {
+    //     return product.mausac.find((c) => c === mausac)
+    //   })
+    // }
     // price
-    tempProducts = tempProducts.filter((product) => product.dongianiemyet <= dongianiemyet)
+    tempProducts = tempProducts.filter(
+      (product) => product.dongianiemyet <= dongianiemyet
+    );
     // shipping
     if (shipping) {
-      tempProducts = tempProducts.filter((product) => product.shipping === true)
+      tempProducts = tempProducts.filter(
+        (product) => product.shipping === true
+      );
     }
-
-    return { ...state, filtered_products: tempProducts }
+    return { ...state, filtered_products: tempProducts };
   }
   if (action.type === XOA_BO_LOC) {
     return {
       ...state,
       filters: {
         ...state.filters,
-        text: '',
-        company: 'all',
-        category: 'all',
-        mausac : 'all',
+        text: "",
+        company: "all",
+        // loaihang: [],
+        mausac: "all",
         dongianiemyet: state.filters.max_price,
         shipping: false,
       },
-    }
+    };
   }
-  throw new Error(`No Matching "${action.type}" - action type`)
-}
+  throw new Error(`No Matching "${action.type}" - action type`);
+};
 
-export default filter_reducer
+export default filter_reducer;

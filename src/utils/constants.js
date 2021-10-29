@@ -53,7 +53,6 @@ export const services = [
 ]
 
 export const products_url = 'http://127.0.0.1:8000/SanPham/'
-export const single_product_url = `https://course-api.com/react-store-single-product?id=`
 
 
 // API ban dau 

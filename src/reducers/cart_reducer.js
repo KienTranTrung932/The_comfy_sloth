@@ -8,11 +8,11 @@ import {
 
 const cart_reducer = (state, action) => {
   if(action.type === THEM_VAO_GIO){
-    const {id,color,amount,product}=action.payload
-    const tempItem = state.cart.find((i)=>i.id === id+color)
+    const {id,amount,product}=action.payload
+    const tempItem = state.cart.find((i)=>i.id === id)
     if(tempItem){
       const tempCart=state.cart.map((cartItem)=>{
-        if(cartItem.id === id + color){
+        if(cartItem.id === id ){
           let newAmount = cartItem.amount + amount;
           if(newAmount > cartItem.max){
             newAmount = cartItem.max
@@ -28,12 +28,11 @@ const cart_reducer = (state, action) => {
     }
     else{
       const newItem ={
-        id:id+color,
-        name:product.name,
-        color,
+        id:id,
+        tensp:product.tensp,
         amount,
-        image:product.images[0].url,
-        price:product.price,
+        hinhanh:product.hinhanh,
+        dongianiemyet:product.dongianiemyet,
         max:product.stock,
 
       }
@@ -81,7 +80,7 @@ const cart_reducer = (state, action) => {
       return total
     },{
       total_items: 0,
-      total_amount: 0
+      total_amount: 0,
     })
     return {...state,total_amount,total_items}
   }

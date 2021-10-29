@@ -1,153 +1,162 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from "react";
+import styled from "styled-components";
+import { useFilterContext } from "../context/filter_context";
+import { getUniqueValues, formatPrice } from "../utils/helpers";
+import { FaCheck } from "react-icons/fa";
 
 const Filters = () => {
   const {
-    filters :{
-      text, 
-      // category,
+    filters: {
+      text,
+      loaihang,
       company,
-      color ,
+      mausac,
       min_price,
       dongianiemyet,
       max_price,
       shipping,
+      stock,
     },
     updateBoLoc,
     clearFilters,
     all_products,
-  } = useFilterContext()
+  } = useFilterContext();
 
-  const categories = getUniqueValues(all_products,'category')
-  const companies = getUniqueValues(all_products,'company')
-  const colors = getUniqueValues(all_products,'colors')
+  const categories = getUniqueValues(all_products, "loaihang");
+  const companies = getUniqueValues(all_products, "company");
+  const colors = getUniqueValues(all_products, "colors");
   
   return (
     <Wrapper>
-      <div className ='content'>
-        <form onSubmit={(e)=>e.preventDefault()}>
+      <div className="content">
+        <form onSubmit={(e) => e.preventDefault()}>
           {/* search input */}
-          <div className='form-control'>
-            <input 
-              type='text' 
-              name='text' 
-              placeholder='tìm kiếm' 
-              className='search-input'
+          <div className="form-control">
+            <input
+              type="text"
+              name="text"
+              placeholder="tìm kiếm"
+              className="search-input"
               value={text}
               onChange={updateBoLoc}
             />
           </div>
-           {/* end search input */}
-           {/* {categories} */}
-           {/* <div className='form-control'>
-             <h5>Loại sản phẩm</h5>
-             <div>{
-               categories.map((c,index)=>{
-                 return <button key={index}
-                 onClick = {updateBoLoc}
-                 name = 'category'
-                 type='button'
-                 className={`${
-                   category === c.toLowerCase() ? 'active' : null
-                 }`}
-                 >{c}</button>
-               })}
-               </div>
-           </div> */}
-           {/* {end of categories} */}
-
-           {/* {companies} */}
-           <div className = ' form-control'>
-             <h5>Công ty</h5>
-             <select 
-              name='company' 
-              value={company} 
-              onChange={updateBoLoc} 
-              className='company'
-             >
-               {companies.map((c,index)=>{
-                 return <option key={index} value={c}>{c}</option>
-               })}
-             </select>
-           </div>
-           {/* {end of companies} */}
-           
-           {/* {colors} */}
-           <div className='form-control'>
-             <h5>Màu sắc</h5>
-             <div className='colors'>
-               {
-               colors.map((c,index)=>{
-                 if(c === 'all'){
-                   return <button 
-                   name='mausac' 
-                   onClick = {updateBoLoc} 
-                   data-color='all'
-                   className={`${color === 'all' ? 'all-btn active':'all-btn'
-                  }`}
-                   >
-                    tất cả
-                     </button>
-                 }
-                 return(
-                   <button
+          {/* end search input */}
+          {/* {categories} */}
+          {/* <div className="form-control">
+            <h5>Loại sản phẩm</h5>
+            <div>
+              {categories.tenloaihang.map((c, index) => {
+                return (
+                  <button
                     key={index}
-                    name='color'
-                    style={{background:c}}
+                    onClick={updateBoLoc}
+                    name="loaihang"
+                    type="button"
+                    className={`${loaihang === c ? "active" : null}`}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          </div> */}
+          {/* {end of categories} */}
+
+          {/* {companies} */}
+          <div className=" form-control">
+            <h5>Công ty</h5>
+            <select
+              name="company"
+              value={company}
+              onChange={updateBoLoc}
+              className="company"
+            >
+              {companies.map((c, index) => {
+                return (
+                  <option key={index} value={c}>
+                    {c}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {/* {end of companies} */}
+
+          {/* {colors} */}
+          {/* <div className="form-control">
+            <h5>Màu sắc</h5>
+            <div className="colors">
+              {colors.map((c, index) => {
+                if (c === "all") {
+                  return (
+                    <button
+                      name="mausac"
+                      onClick={updateBoLoc}
+                      data-color="all"
+                      className={`${
+                        mausac === "all" ? "all-btn active" : "all-btn"
+                      }`}
+                    >
+                      tất cả
+                    </button>
+                  );
+                }
+                return (
+                  <button
+                    key={index}
+                    name="color"
+                    style={{ background: c }}
                     className={`${
-                      color === c? 'color-btn active' : 
-                      'color-btn'
+                      mausac === c ? "color-btn active" : "color-btn"
                     }`}
                     data-color={c}
                     onClick={updateBoLoc}
-                   >
-                     {color === c ? <FaCheck/> : null}
-                   </button>
-                 )
-               })}
-             </div>
-           </div>
-           {/* {end of colors} */}
+                  >
+                    {mausac === c ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div> */}
+          {/* {end of colors} */}
 
-           {/* {price} */}
-           <div className='form-control'>
-             <h5>Giá</h5>
-             <p className='price'>{formatPrice((dongianiemyet))}</p>
-             <input 
-             type='range' 
-             name='dongianiemyet' 
-             onChange={updateBoLoc}
-             min = {min_price}
-             max = {max_price}
-             value = {dongianiemyet}
-             ></input>
-           </div>
-           {/* {end of price} */}
-           
-           {/* {shipping} */}
-           <div className='form-control shipping'>
-               <label htmlFor='shipping'>free shipping</label>
-               <input 
-                type='checkbox' 
-                name='shipping' 
-                id='shipping' 
-                onChange={updateBoLoc} 
-                checked={shipping}
-               />
-           </div>
-           {/* {end of shipping} */}
+          {/* {price} */}
+          <div className="form-control">
+            <h5>Giá</h5>
+            <p className="price">{formatPrice(dongianiemyet)}</p>
+            <input
+              type="range"
+              name="dongianiemyet"
+              onChange={updateBoLoc}
+              min={min_price}
+              max={max_price}
+              value={dongianiemyet}
+            ></input>
+          </div>
+          {/* {end of price} */}
+
+          {/* {shipping} */}
+          <div className="form-control shipping">
+            <label htmlFor="shipping">free shipping</label>
+            <input
+              type="checkbox"
+              name="shipping"
+              id="shipping"
+              onChange={updateBoLoc}
+              checked={shipping}
+            />
+          </div>
+          {/* {end of shipping} */}
         </form>
-        <button type='button' className='clear-btn' onClick={clearFilters}>
-          {''}
+        <button type="button" className="clear-btn" onClick={clearFilters}>
+          {""}
           Xóa Bộ Lọc
         </button>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   .form-control {
@@ -246,6 +255,6 @@ const Wrapper = styled.section`
       top: 1rem;
     }
   }
-`
+`;
 
-export default Filters
+export default Filters;

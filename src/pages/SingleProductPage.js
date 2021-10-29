@@ -1,80 +1,120 @@
-import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { single_product_url as url } from '../utils/constants'
-import { formatPrice } from '../utils/helpers'
+import React, { useEffect,useState} from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { formatPrice } from "../utils/helpers";
+import { saveRating } from "../components/Stars";
+import { BsStarFill } from "react-icons/bs";
 import {
   Loading,
   Error,
   ProductImages,
   AddToCart,
-  Stars,
   PageHero,
-} from '../components'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+} from "../components";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
 const SingleProductPage = () => {
-  const { id } = useParams()
-  const history = useHistory()
+  const [rating, setRating] = useState(null);
+  const [rate, setRate] = useState(0);
+  const [hover, setHover] = useState(null);
+  const user = useSelector((state) => state.user.user);
+
+  const { id } = useParams();
+  const history = useHistory();
   const {
     single_product_loading: loading,
     single_product_error: error,
     single_product: product,
     layChiTietSanPham,
-  } = useProductsContext()
+    layDanhGiaSanPham,
+  } = useProductsContext();
 
   useEffect(() => {
-    layChiTietSanPham(`${url}${id}`)
-    console.log(layChiTietSanPham)
+    layChiTietSanPham(id);
+    layDanhGiaSanPham(id,rate)
     // eslint-disable-next-line
-  }, [id])
+  }, [id,rate]);
 
   useEffect(() => {
     if (error) {
       setTimeout(() => {
-        history.push('/')
-      }, 3000)
+        history.push("/");
+      }, 3000);
     }
     // eslint-disable-next-line
-  }, [error])
+  }, [error]);
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
   if (error) {
-    return <Error />
+    return <Error />;
   }
   const {
-    tensp ,
+    tensp = "",
     dongianiemyet,
     mota,
     stock,
     // stars,
-    // reviews,
-    id: sku,
+    reviews,
+    masp: sku,
     // company,
-    hinhsp,
-  } = product
+    hinhanh,
+  } = product;
   return (
     <Wrapper>
       <PageHero title={tensp} product />
-      <div className='section section-center page'>
-        <Link to='/SanPham' className='btn'>
+      <div className="section section-center page">
+        <Link to="/SanPham" className="btn">
           Trở về trang sản phẩm
         </Link>
-        <div className=' product-center'>
-          <ProductImages images={hinhsp} />
-          <section className='content'>
+        <div className=" product-center">
+          <ProductImages images={hinhanh} />
+          <section className="content">
             <h2>{tensp}</h2>
-            {/* <Stars stars={stars} reviews={reviews} /> */}
-            <h5 className='price'> {formatPrice(dongianiemyet)}</h5>
-            <p className='desc'> {mota}</p>
-            <p className='info'>
+
+            <Wrapper2>
+              <div className="stars">
+                {user && (
+                  <div>
+                    {[...Array(5)].map((star, i) => {
+                      const ratingValue = i + 1;
+                      return (
+                        <label>
+                          <input
+                            type="radio"
+                            name="rating"
+                            value={ratingValue}
+                            onClick={() => setRating(ratingValue)}
+                          />
+                          <BsStarFill
+                            className="starFill"
+                            onMouseEnter={() => setHover(ratingValue)}
+                            onMouseLeave={() => setHover(null)}
+                            onClick={saveRating}
+                            color={
+                              ratingValue <= (hover || rating)
+                                ? "#ffb900"
+                                : "#e4e5e9"
+                            }
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </Wrapper2>
+            
+            <h5 className="price"> {formatPrice(dongianiemyet)}</h5>
+            <p className="desc"> {mota}</p>
+            <p className="info">
               <span>Có sẵn : </span>
-              {stock > 0 ? 'In stock' : 'out of stock'}
+              {stock > 0 ? "In stock" : "out of stock"}
             </p>
-            <p className='info'>
+            <p className="info">
               <span>Mã kho: </span>
               {sku}
             </p>
@@ -88,8 +128,8 @@ const SingleProductPage = () => {
         </div>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.main`
   .product-center {
@@ -123,6 +163,17 @@ const Wrapper = styled.main`
       font-size: 1.25rem;
     }
   }
-`
-
-export default SingleProductPage
+`;
+const Wrapper2 = styled.div`
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+  }
+  margin-bottom: 0.5rem;
+  input[type="radio"] {
+    display: none;
+  }
+`;
+export default SingleProductPage;

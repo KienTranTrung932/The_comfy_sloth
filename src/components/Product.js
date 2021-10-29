@@ -4,11 +4,11 @@ import { formatPrice } from '../utils/helpers'
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const Product = ({ hinhsp, tensp, dongianiemyet, id }) => {
+const Product = ({ hinhanh, tensp, dongianiemyet, id }) => {
   return (
     <Wrapper>
       <div className='container'>
-        <img src={hinhsp} alt={tensp} />
+        <img src={hinhanh} alt={tensp} />
         <Link to={`/SanPham/${id}`} className='link'>
           <FaSearch />
         </Link>

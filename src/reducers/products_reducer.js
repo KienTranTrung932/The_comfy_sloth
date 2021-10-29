@@ -7,6 +7,9 @@ import {
   BAT_DAU_LAY_CHI_TIET_SAN_PHAM,
   LAY_CHI_TIET_SAN_PHAM_THANH_CONG,
   LOI_LAY_CHI_TIET_SAN_PHAM,
+  BAT_DAU_DANH_GIA_CHI_TIET_SAN_PHAM,
+  DANH_GIA_CHI_TIET_SAN_PHAM_THANH_CONG,
+  LOI_DANH_GIA_CHI_TIET_SAN_PHAM,
 } from '../actions'
 
 const products_reducer = (state, action) => {
@@ -52,6 +55,21 @@ const products_reducer = (state, action) => {
       ...state,
       single_product_loading: false,
       single_product_error: true,
+    }
+  }
+  if (action.type ===  BAT_DAU_DANH_GIA_CHI_TIET_SAN_PHAM) {
+    return {
+      ...state,
+    }
+  }
+  if (action.type === DANH_GIA_CHI_TIET_SAN_PHAM_THANH_CONG) {
+    return {
+      ...state,
+    }
+  }
+  if (action.type ===LOI_DANH_GIA_CHI_TIET_SAN_PHAM) {
+    return {
+      ...state,
     }
   }
   throw new Error(`No Matching "${action.type}" - action type`)
