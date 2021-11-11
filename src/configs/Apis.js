@@ -1,10 +1,8 @@
 import axios from "axios"
 
 export let endpoints = {
-   "oauth2-info":"/oauth2-info/",
-   "login":"/o/token",
-   "current-user":"/User/current-user/",
-   "rating" : (id) =>`/SanPham/${id}/rating`
+   "rating" : (id) =>`/SanPham/${id}/rating/`,
+  //  "comments": (id)=> `/SanPham/${id}/comments/`
   }
 
   export default axios.create({

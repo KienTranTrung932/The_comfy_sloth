@@ -1,9 +1,13 @@
-import React, { useEffect,useState} from "react";
+/* eslint-disable */
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useProductsContext } from "../context/products_context";
 import { formatPrice } from "../utils/helpers";
-import { saveRating } from "../components/Stars";
 import { BsStarFill } from "react-icons/bs";
+import Rating from "react-rating";
+import { products_url as url } from "../utils/constants";
+import axios from "axios";
+import cookies from "react-cookies";
 import {
   Loading,
   Error,
@@ -15,10 +19,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import Apis, { endpoints } from "../configs/Apis";
+import { Rate } from "antd";
 const SingleProductPage = () => {
-  const [rating, setRating] = useState(null);
-  const [rate, setRate] = useState(0);
-  const [hover, setHover] = useState(null);
+  const [rating, setRating] = useState(0);
   const user = useSelector((state) => state.user.user);
 
   const { id } = useParams();
@@ -28,14 +32,33 @@ const SingleProductPage = () => {
     single_product_error: error,
     single_product: product,
     layChiTietSanPham,
-    layDanhGiaSanPham,
   } = useProductsContext();
+
+  const saveRating = async (rate) => {
+    try {
+      let res = await axios.post(
+        `${url}${id}/rating/`,
+        {
+          danhgia: rate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.load("access_token")}`,
+          },
+        }
+      );
+      console.info(res.data);
+      saveRating(res.data.rate);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     layChiTietSanPham(id);
-    layDanhGiaSanPham(id,rate)
     // eslint-disable-next-line
-  }, [id,rate]);
+    setRating(id);
+  }, [id]);
 
   useEffect(() => {
     if (error) {
@@ -63,6 +86,16 @@ const SingleProductPage = () => {
     // company,
     hinhanh,
   } = product;
+
+  let r = "";
+  if (user !== null && user !== undefined) {
+    r = (
+      <>
+        <Rating initialRating={rating} onClick={saveRating} />
+      </>
+    );
+  }
+
   return (
     <Wrapper>
       <PageHero title={tensp} product />
@@ -74,40 +107,7 @@ const SingleProductPage = () => {
           <ProductImages images={hinhanh} />
           <section className="content">
             <h2>{tensp}</h2>
-
-            <Wrapper2>
-              <div className="stars">
-                {user && (
-                  <div>
-                    {[...Array(5)].map((star, i) => {
-                      const ratingValue = i + 1;
-                      return (
-                        <label>
-                          <input
-                            type="radio"
-                            name="rating"
-                            value={ratingValue}
-                            onClick={() => setRating(ratingValue)}
-                          />
-                          <BsStarFill
-                            className="starFill"
-                            onMouseEnter={() => setHover(ratingValue)}
-                            onMouseLeave={() => setHover(null)}
-                            onClick={saveRating}
-                            color={
-                              ratingValue <= (hover || rating)
-                                ? "#ffb900"
-                                : "#e4e5e9"
-                            }
-                          />
-                        </label>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </Wrapper2>
-            
+            <div>{r}</div>
             <h5 className="price"> {formatPrice(dongianiemyet)}</h5>
             <p className="desc"> {mota}</p>
             <p className="info">

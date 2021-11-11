@@ -7,72 +7,54 @@ import {
   BAT_DAU_LAY_CHI_TIET_SAN_PHAM,
   LAY_CHI_TIET_SAN_PHAM_THANH_CONG,
   LOI_LAY_CHI_TIET_SAN_PHAM,
-  BAT_DAU_DANH_GIA_CHI_TIET_SAN_PHAM,
-  DANH_GIA_CHI_TIET_SAN_PHAM_THANH_CONG,
-  LOI_DANH_GIA_CHI_TIET_SAN_PHAM,
-} from '../actions'
+} from "../actions";
 
 const products_reducer = (state, action) => {
   if (action.type === SIDEBAR_OPEN) {
-    return { ...state, isSidebarOpen: true }
+    return { ...state, isSidebarOpen: true };
   }
   if (action.type === SIDEBAR_CLOSE) {
-    return { ...state, isSidebarOpen: false }
+    return { ...state, isSidebarOpen: false };
   }
-  if (action.type ===  BAT_DAU_LAY_SAN_PHAM) {
-    return { ...state, products_loading: true }
+  if (action.type === BAT_DAU_LAY_SAN_PHAM) {
+    return { ...state, products_loading: true };
   }
   if (action.type === LAY_SAN_PHAM_THANH_CONG) {
     const featured_products = action.payload.filter(
       (product) => product.shipping === true
-    )
+    );
     return {
       ...state,
       products_loading: false,
       products: action.payload,
       featured_products,
-    }
+    };
   }
   if (action.type === LAY_SAN_PHAM_THAT_BAI) {
-    return { ...state, products_loading: false, products_error: true }
+    return { ...state, products_loading: false, products_error: true };
   }
-  if (action.type ===  BAT_DAU_LAY_CHI_TIET_SAN_PHAM) {
+  if (action.type === BAT_DAU_LAY_CHI_TIET_SAN_PHAM) {
     return {
       ...state,
       single_product_loading: true,
       single_product_error: false,
-    }
+    };
   }
   if (action.type === LAY_CHI_TIET_SAN_PHAM_THANH_CONG) {
     return {
       ...state,
       single_product_loading: false,
       single_product: action.payload,
-    }
+    };
   }
   if (action.type === LOI_LAY_CHI_TIET_SAN_PHAM) {
     return {
       ...state,
       single_product_loading: false,
       single_product_error: true,
-    }
+    };
   }
-  if (action.type ===  BAT_DAU_DANH_GIA_CHI_TIET_SAN_PHAM) {
-    return {
-      ...state,
-    }
-  }
-  if (action.type === DANH_GIA_CHI_TIET_SAN_PHAM_THANH_CONG) {
-    return {
-      ...state,
-    }
-  }
-  if (action.type ===LOI_DANH_GIA_CHI_TIET_SAN_PHAM) {
-    return {
-      ...state,
-    }
-  }
-  throw new Error(`No Matching "${action.type}" - action type`)
-}
+  throw new Error(`No Matching "${action.type}" - action type`);
+};
 
-export default products_reducer
+export default products_reducer;

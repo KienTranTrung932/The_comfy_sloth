@@ -1,28 +1,28 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
+import React from "react";
+import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { FaTimes } from "react-icons/fa";
+import { links } from "../utils/constants";
+import styled from "styled-components";
+import CartButtons from "./CartButtons";
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useProductsContext()
+  const { isSidebarOpen, closeSidebar } = useProductsContext();
   const user = useSelector((state) => state.user.user);
   return (
     <SidebarContainer>
       <aside
-        className={`${isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'}`}
+        className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}
       >
-        <div className='sidebar-header'>
-          <img src={logo} className='logo' alt='comfy sloth' />
-          <button className='close-btn' type='button' onClick={closeSidebar}>
+        <div className="sidebar-header">
+          <img src={logo} className="logo" alt="comfy sloth" />
+          <button className="close-btn" type="button" onClick={closeSidebar}>
             <FaTimes />
           </button>
         </div>
-        <ul className='links'>
+        <ul className="links">
           {links.map(({ id, text, url }) => {
             return (
               <li key={id}>
@@ -30,27 +30,27 @@ const Sidebar = () => {
                   {text}
                 </Link>
               </li>
-            )
+            );
           })}
-          {user !== null ? (
+          {user == null ? (
             <li>
-              <Link to='/ThanhToan' onClick={closeSidebar}>
+              <Link to="/DangKy" onClick={closeSidebar}>
+                Đăng ký
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link to="/ThanhToan" onClick={closeSidebar}>
                 Thanh toán
               </Link>
             </li>
-          ):(
-            <li>
-            <Link to='/DangKy' onClick={closeSidebar}>
-              Đăng ký
-            </Link>
-          </li>
           )}
         </ul>
         <CartButtons />
       </aside>
     </SidebarContainer>
-  )
-}
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -121,6 +121,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;

@@ -72,8 +72,7 @@ const filter_reducer = (state, action) => {
   }
   if (action.type === LOC_SAN_PHAM) {
     const { all_products } = state;
-    const { text, company, dongianiemyet, shipping } =
-      state.filters;
+    const { text, loaihang, dongianiemyet, mausac, shipping } = state.filters;
 
     let tempProducts = [...all_products];
     // filtering
@@ -83,25 +82,21 @@ const filter_reducer = (state, action) => {
         return product.tensp.toLowerCase().startsWith(text);
       });
     }
-    // category
-    // if (loaihang !== "all") {
-    //   tempProducts = tempProducts.filter(
-    //     (product) => product.loaihang === loaihang
-    //   );
-    // }
 
-    // company
-    if (company !== "all") {
+    // loaiHang
+    if (loaihang !== "all") {
       tempProducts = tempProducts.filter(
-        (product) => product.company === company
+        (product) => product.loaihang === +loaihang
       );
     }
+    console.log(state);
     // colors
-    // if (mausac !== 'all') {
-    //   tempProducts = tempProducts.filter((product) => {
-    //     return product.mausac.find((c) => c === mausac)
-    //   })
-    // }
+    if (mausac !== "all") {
+      console.log(tempProducts, mausac);
+      tempProducts = tempProducts.filter((product) => {
+        return product.mausac.some((item) => item.name === mausac);
+      });
+    }
     // price
     tempProducts = tempProducts.filter(
       (product) => product.dongianiemyet <= dongianiemyet
@@ -120,7 +115,7 @@ const filter_reducer = (state, action) => {
       filters: {
         ...state.filters,
         text: "",
-        company: "all",
+        loaihang: "all",
         // loaihang: [],
         mausac: "all",
         dongianiemyet: state.filters.max_price,

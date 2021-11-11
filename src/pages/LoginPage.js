@@ -25,11 +25,11 @@ export default function LoginPage() {
     try {
       let info = await axios.get("http://127.0.0.1:8000/oauth2-info/");
       let res = await axios.post("http://127.0.0.1:8000/o/token/", {
-        client_id: info.data.client_id,
-        client_secret: info.data.client_serect,
-        username: username,
-        password: password,
-        grant_type: "password",
+        "client_id": info.data.client_id,
+        "client_secret": info.data.client_secret,
+        "username": username,
+        "password": password,
+        "grant_type": "password",
       });
       cookies.save("access_token", res.data.access_token);
       let user = await axios.get("http://127.0.0.1:8000/User/current-user/", {

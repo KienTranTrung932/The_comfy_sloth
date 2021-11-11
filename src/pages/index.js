@@ -4,7 +4,7 @@ import SingleProduct from "./SingleProductPage";
 import About from "./AboutPage";
 import Cart from "./CartPage";
 import Error from "./ErrorPage";
-import Article from "./ArticlesPage";
+// import Article from "./ArticlesPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage"
 
@@ -15,7 +15,7 @@ export {
   About,
   Cart,
   Error,
-  Article,
+  // Article,
   RegisterPage,
   LoginPage
 };

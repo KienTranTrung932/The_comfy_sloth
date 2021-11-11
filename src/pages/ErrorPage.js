@@ -6,7 +6,7 @@ const ErrorPage = () => {
     <Wrapper className='page-100'>  
     <section>
       <h1>404</h1>
-      <h3>Sorry the page you tried not to be found</h3>
+      <h2>Trang bạn cần tìm không có</h2>
       <Link to='/' className='btn'>
         Trở về trang chủ
       </Link>

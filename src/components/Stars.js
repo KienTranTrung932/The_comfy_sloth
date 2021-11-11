@@ -10,29 +10,31 @@
 // import Apis, { endpoints } from "../configs/Apis";
 // const Stars = () => {
 //   const { id } = useParams();
-//   const [rating, setRating] = useState(null);
-//   const [rate, setRate] = useState(0);
+//   const [rate, setRate] = useState(null);
+//   const [rating, setRating] = useState(0);
 //   const [hover, setHover] = useState(null);
 //   const user = useSelector((state) => state.user.user);
-
-//   const saveRating = async (rate, id) => {
-//     // if (window.confirm("Bạn có muốn đánh giá sản phẩn này không ?") == true) {
-//     try{
-//       let res = await Apis.post(endpoints['rating'](id),{
-//         "rating":rate
-//       },{
-//         headers:{
-//           "Authorization":`Bearer${cookies.load("access_token")}`
+//   const saveRating = async (rate) => {
+//     try {
+//       const res = await Apis.post(
+//         endpoints["rating"](id),
+//         {
+//          "rating": rate,
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${cookies.load("access_token")}`,
+//           },
 //         }
-//       })
+//       );
 //       console.info(res.data)
-//     }catch(err){
+//     } catch (err) {
 //       console.log(err);
 //     }
-//     // }
 //   };
+
 //   return (
-//     <Wrapper>
+//     <Wrapper initialRating={rating}>
 //       <div className="stars">
 //         {user && (
 //           <div>
@@ -44,7 +46,7 @@
 //                     type="radio"
 //                     name="rating"
 //                     value={ratingValue}
-//                     onClick={() => setRating(ratingValue)}
+//                     onClick={() => setRate(ratingValue)}
 //                   />
 //                   <BsStarFill
 //                     className="starFill"
@@ -52,7 +54,7 @@
 //                     onMouseLeave={() => setHover(null)}
 //                     onClick={saveRating}
 //                     color={
-//                       ratingValue <= (hover || rating) ? "#ffb900" : "#e4e5e9"
+//                       ratingValue <= (hover || rate) ? "#ffb900" : "#e4e5e9"
 //                     }
 //                   />
 //                 </label>

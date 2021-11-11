@@ -74,9 +74,9 @@ const cart_reducer = (state, action) => {
 
   if(action.type === DEM_TONG_HANG_TRONG_GIO){
     const {total_items,total_amount}=state.cart.reduce((total,cartItem)=>{
-      const{amount,price} = cartItem
+      const{amount,dongianiemyet} = cartItem
       total.total_items += amount
-      total.total_amount += price * amount
+      total.total_amount += dongianiemyet * amount
       return total
     },{
       total_items: 0,

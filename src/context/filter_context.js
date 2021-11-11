@@ -19,9 +19,8 @@ const initialState = {
   sort: 'price-lowest',
   filters: {
     text: '',
-    company: 'all',
-    loaihang: [],
-    // mausac: 'all',
+    loaihang: 'all',
+    mausac: 'all',
     min_price: 0,
     max_price: 0,
     donggianiemyet: 0,
@@ -64,13 +63,11 @@ export const FilterProvider = ({ children }) => {
   const updateBoLoc= (e) => {
     let name = e.target.name
     let value = e.target.value
+    if (name === 'mausac') {
+      value = e.target.dataset.mausac
+      // console.log(e.target);
 
-    // if (name === 'loaihang') {
-    //   value = e.value.loaihang
-    // }
-    // if (name === 'mausac') {
-    //   value = e.target.dataset.mausac
-    // }
+    }
     if (name === 'price') {
       value = Number(value)
     }

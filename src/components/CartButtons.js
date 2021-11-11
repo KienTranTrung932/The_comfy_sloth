@@ -18,7 +18,7 @@ const CartButtons = () => {
     // event.preventDefault()
     cookies.remove("access_token");
     cookies.remove("user");
-    dispatch(logoutUser())
+    dispatch(logoutUser());
   };
   let path = (
     <>
@@ -59,22 +59,6 @@ const CartButtons = () => {
         </span>
       </Link>
       {path}
-      {/* {user == null ? (
-        <Link
-          type='button'
-          className='auth-btn'
-          onClick={() => {
-            xoaGioHang ()
-            logout()
-          }}
-        >
-          Logout <FaUserMinus />
-        </Link>
-      ) : (
-        <Link type='button' className='auth-btn' linkto="/DangNhap">
-          Login <FaUserPlus />
-        </Link>
-      )} */}
     </Wrapper>
   );
 };
@@ -94,7 +78,7 @@ const Wrapper = styled.div`
 
     align-items: center;
   }
-   .cart-container {
+  .cart-container {
     display: flex;
     align-items: center;
     position: relative;

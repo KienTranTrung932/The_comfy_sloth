@@ -10,7 +10,7 @@ import {
   Error,
   About,
   Products,
-  Article,
+  // Article,
   RegisterPage,
   LoginPage,
 } from "./pages";
@@ -33,9 +33,9 @@ function App() {
         <Route exact path="/SanPham">
           <Products />
         </Route>
-        <Route exact path="/BaiDanhGia">
+        {/* <Route exact path="/BaiDanhGia">
           <Article />
-        </Route>
+        </Route> */}
         <Route exact path="/DangKy">
           <RegisterPage />
         </Route>

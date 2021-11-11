@@ -1,55 +1,74 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FaCheck } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-import AmountButtons from './AmountButtons'
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
+import { useCartContext } from "../context/cart_context";
+import AmountButtons from "./AmountButtons";
 
 const AddToCart = ({ product }) => {
-  const { themVaoGio } = useCartContext()
-  const { id, stock, mausac } = product
+  const { themVaoGio } = useCartContext();
+  const { id, stock, mausac } = product;
 
-  // const [mainColor, setMainColor] = useState(colors[0])
-  const [amount, setAmount] = useState(1)
+  const [mainColor, setMainColor] = useState(mausac[0])
+  const [amount, setAmount] = useState(1);
 
   const increase = () => {
     setAmount((oldAmount) => {
-      let tempAmount = oldAmount + 1
+      let tempAmount = oldAmount + 1;
       if (tempAmount > stock) {
-        tempAmount = stock
+        tempAmount = stock;
       }
-      return tempAmount
-    })
-  }
+      return tempAmount;
+    });
+  };
   const decrease = () => {
     setAmount((oldAmount) => {
-      let tempAmount = oldAmount - 1
+      let tempAmount = oldAmount - 1;
       if (tempAmount < 1) {
-        tempAmount = 1
+        tempAmount = 1;
       }
-      return tempAmount
-    })
-  }
+      return tempAmount;
+    });
+  };
 
   return (
     <Wrapper>
-      <div className='btn-container'>
+      <div className="colors">
+        <span> mau sac : </span>
+        <div>
+          {mausac.map((mausac, index) => {
+            return (
+              <button
+                key={index}
+                style={{ background: mausac }}
+                className={`${
+                  mainColor === mausac ? "color-btn active" : "color-btn"
+                }`}
+                onClick={() => setMainColor(mausac)}
+              >
+                {mainColor === mausac ? <FaCheck /> : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="btn-container">
         <AmountButtons
           amount={amount}
           increase={increase}
           decrease={decrease}
         />
         <Link
-          to='/GioHang'
-          className='btn'
-          onClick={() => themVaoGio(id,  amount, product)}
+          to="/GioHang"
+          className="btn"
+          onClick={() => themVaoGio(id, amount, product)}
         >
           Thêm vào giỏ
         </Link>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   margin-top: 2rem;
@@ -95,5 +114,5 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     width: 140px;
   }
-`
-export default AddToCart
+`;
+export default AddToCart;

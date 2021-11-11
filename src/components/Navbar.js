@@ -30,13 +30,13 @@ const Nav = () => {
               </li>
             );
           })}
-          {user !== null ? (
+          {user == null ? (
             <li>
-              <Link to="/ThanhToan">Thanh toán</Link>
+              <Link to="/DangKy">Đăng Ký</Link>
             </li>
           ) : (
             <li>
-              <Link to="/DangKy">Đăng Ký</Link>
+              <Link to="/ThanhToan">Thanh toán</Link>
             </li>
           )}
         </ul>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useFilterContext } from "../context/filter_context";
-import { getUniqueValues, formatPrice } from "../utils/helpers";
+import { getUniqueValues, formatPrice, getUniqueLoaiHang } from "../utils/helpers";
 import { FaCheck } from "react-icons/fa";
 
 const Filters = () => {
@@ -9,7 +9,6 @@ const Filters = () => {
     filters: {
       text,
       loaihang,
-      company,
       mausac,
       min_price,
       dongianiemyet,
@@ -21,11 +20,10 @@ const Filters = () => {
     clearFilters,
     all_products,
   } = useFilterContext();
+  console.log(mausac);
+  const cacLoaiHang = getUniqueLoaiHang(all_products, "loaihang");
 
-  const categories = getUniqueValues(all_products, "loaihang");
-  const companies = getUniqueValues(all_products, "company");
-  const colors = getUniqueValues(all_products, "colors");
-  
+  const colors = getUniqueValues(all_products, "mausac");
   return (
     <Wrapper>
       <div className="content">
@@ -65,14 +63,14 @@ const Filters = () => {
 
           {/* {companies} */}
           <div className=" form-control">
-            <h5>Công ty</h5>
+            <h5>Loại hàng</h5>
             <select
-              name="company"
-              value={company}
+              name="loaihang"
+              value={loaihang}
               onChange={updateBoLoc}
               className="company"
             >
-              {companies.map((c, index) => {
+              {cacLoaiHang.map((c, index) => {
                 return (
                   <option key={index} value={c}>
                     {c}
@@ -84,7 +82,7 @@ const Filters = () => {
           {/* {end of companies} */}
 
           {/* {colors} */}
-          {/* <div className="form-control">
+          <div className="form-control">
             <h5>Màu sắc</h5>
             <div className="colors">
               {colors.map((c, index) => {
@@ -93,7 +91,7 @@ const Filters = () => {
                     <button
                       name="mausac"
                       onClick={updateBoLoc}
-                      data-color="all"
+                      data-mausac="all"
                       className={`${
                         mausac === "all" ? "all-btn active" : "all-btn"
                       }`}
@@ -105,12 +103,12 @@ const Filters = () => {
                 return (
                   <button
                     key={index}
-                    name="color"
+                    name="mausac"
                     style={{ background: c }}
                     className={`${
                       mausac === c ? "color-btn active" : "color-btn"
                     }`}
-                    data-color={c}
+                    data-mausac={c}
                     onClick={updateBoLoc}
                   >
                     {mausac === c ? <FaCheck /> : null}
@@ -118,7 +116,7 @@ const Filters = () => {
                 );
               })}
             </div>
-          </div> */}
+          </div>
           {/* {end of colors} */}
 
           {/* {price} */}
