@@ -16,12 +16,6 @@ export const links = [
     text: "sản phẩm",
     url: "/SanPham",
   },
-
-  // {
-  //   id: 5,
-  //   text: "Đăng Ký",
-  //   url: "/DangKy",
-  // },
 ];
 
 export const services = [
@@ -47,7 +41,3 @@ export const services = [
 
 export const products_url = "http://127.0.0.1:8000/SanPham/";
 
-// API ban dau
-// export const products_url = 'https://course-api.com/react-store-products'
-
-// export const single_product_url = `https://course-api.com/react-store-single-product?id=`

@@ -25,11 +25,11 @@ export default function LoginPage() {
     try {
       let info = await axios.get("http://127.0.0.1:8000/oauth2-info/");
       let res = await axios.post("http://127.0.0.1:8000/o/token/", {
-        "client_id": info.data.client_id,
-        "client_secret": info.data.client_secret,
-        "username": username,
-        "password": password,
-        "grant_type": "password",
+        client_id: info.data.client_id,
+        client_secret: info.data.client_secret,
+        username: username,
+        password: password,
+        grant_type: "password",
       });
       cookies.save("access_token", res.data.access_token);
       let user = await axios.get("http://127.0.0.1:8000/User/current-user/", {
@@ -37,7 +37,6 @@ export default function LoginPage() {
           Authorization: `Bearer ${cookies.load("access_token")}`,
         },
       });
-      console.info(user);
       cookies.save("user", user.data);
       dispatch(loginUser(user.data));
       history.push("/");
@@ -52,6 +51,7 @@ export default function LoginPage() {
   };
   const onLoginSuccess = (res) => {
     console.log("Login Success:", res.profileObj);
+
     setShowLoginButton(false);
     setShowLogoutButton(true);
   };
@@ -101,7 +101,7 @@ export default function LoginPage() {
           <button type="submit" className="submit-btn" onSubmit={login}>
             Đăng nhập
           </button>
-          <h5 className="google-btn" >Hoặc đăng nhập bằng</h5>
+          <h5 className="google-btn">Hoặc đăng nhập bằng</h5>
           <div>
             {showLoginButton ? (
               <GoogleLogin

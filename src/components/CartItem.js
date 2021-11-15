@@ -4,7 +4,7 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = ({id,hinhanh,tensp,dongianiemyet,amount}) => {
+const CartItem = ({id,hinhanh,tensp,dongianiemyet,amount,mausac}) => {
   const {xoaHang, thayDoiSoLuong} = useCartContext()
   const increase =()=>{
     thayDoiSoLuong(id,'inc')
@@ -19,9 +19,9 @@ const CartItem = ({id,hinhanh,tensp,dongianiemyet,amount}) => {
         <img src={hinhanh} alt={tensp} />
         <div>
           <h5 className='name'>{tensp}</h5>
-          {/* <p className='color'>
-            màu sắc : <span style={{ background: color }}></span>
-          </p> */}
+          <p className='color'>
+            màu sắc : <span style={{ background: mausac }}></span>
+          </p>
           <h5 className='price-small'>{formatPrice(dongianiemyet)}</h5>
         </div>
       </div>

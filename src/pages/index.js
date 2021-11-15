@@ -4,10 +4,10 @@ import SingleProduct from "./SingleProductPage";
 import About from "./AboutPage";
 import Cart from "./CartPage";
 import Error from "./ErrorPage";
-// import Article from "./ArticlesPage";
 import RegisterPage from "./RegisterPage";
-import LoginPage from "./LoginPage"
-
+import LoginPage from "./LoginPage";
+import Checkout from "./CheckoutPage";
+import PrivateRoute from "./PrivateRoute";
 export {
   Home,
   Products,
@@ -15,7 +15,8 @@ export {
   About,
   Cart,
   Error,
-  // Article,
   RegisterPage,
-  LoginPage
+  LoginPage,
+  PrivateRoute,
+  Checkout,
 };

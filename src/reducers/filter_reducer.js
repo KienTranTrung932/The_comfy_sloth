@@ -13,7 +13,6 @@ const filter_reducer = (state, action) => {
   if (action.type === LOAD_SAN_PHAM) {
     let maxPrice = action.payload.map((p) => p.dongianiemyet);
     maxPrice = Math.max(...maxPrice);
-    // let categoryName = action.payload.map((p)=>p.tenloaihang)
     return {
       ...state,
       all_products: [...action.payload],
@@ -22,7 +21,6 @@ const filter_reducer = (state, action) => {
         ...state.filters,
         max_price: maxPrice,
         dongianiemyet: maxPrice,
-        // loaihang:[categoryName],
       },
     };
   }
@@ -89,10 +87,8 @@ const filter_reducer = (state, action) => {
         (product) => product.loaihang === +loaihang
       );
     }
-    console.log(state);
     // colors
     if (mausac !== "all") {
-      console.log(tempProducts, mausac);
       tempProducts = tempProducts.filter((product) => {
         return product.mausac.some((item) => item.name === mausac);
       });
@@ -116,7 +112,6 @@ const filter_reducer = (state, action) => {
         ...state.filters,
         text: "",
         loaihang: "all",
-        // loaihang: [],
         mausac: "all",
         dongianiemyet: state.filters.max_price,
         shipping: false,

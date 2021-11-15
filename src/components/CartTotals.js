@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-
+import { useSelector } from "react-redux";
 const CartTotals = () => {
   const { total_amount, shipping_fee } = useCartContext()
+  const user = useSelector((state) => state.user.user);
   return (
     <Wrapper>
       <div>
@@ -22,15 +23,15 @@ const CartTotals = () => {
             <span>{formatPrice(total_amount + shipping_fee)}</span>
           </h4>
         </article>
-        {/* {!myUser ? (
+        {user ? (
           <Link to='/ThanhToan' className='btn'>
-            Đăng nhập để thanh toán
+            Thanh toán
           </Link>
         ) : (
-          <button type='button' className='btn' onClick={loginWithRedirect}>
-            login
-          </button>
-        )} */}
+          <Link type='button' className='btn' to='/DangNhap'  >
+           Đăng nhập để thanh toán
+          </Link>
+        )}
       </div>
     </Wrapper>
   )

@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
-import Register from "./components/Register";
 
 import {
   Home,
@@ -10,9 +9,10 @@ import {
   Error,
   About,
   Products,
-  // Article,
   RegisterPage,
   LoginPage,
+  Checkout,
+  PrivateRoute,
 } from "./pages";
 
 function App() {
@@ -33,9 +33,6 @@ function App() {
         <Route exact path="/SanPham">
           <Products />
         </Route>
-        {/* <Route exact path="/BaiDanhGia">
-          <Article />
-        </Route> */}
         <Route exact path="/DangKy">
           <RegisterPage />
         </Route>
@@ -43,9 +40,9 @@ function App() {
           <LoginPage />
         </Route>
         <Route exact path="/SanPham/:id" children={<SingleProduct />} />
-        {/* <Route exact path="/ThanhToan">
-          <Checkout />
-        </Route> */}
+        <PrivateRoute exact path='/ThanhToan'>
+            <Checkout />
+          </PrivateRoute>
         <Route path="*">
           <Error />
         </Route>

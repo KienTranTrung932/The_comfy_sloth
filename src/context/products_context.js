@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import reducer from "../reducers/products_reducer";
 import { products_url as url } from "../utils/constants";
 import {
@@ -12,6 +12,7 @@ import {
   LAY_CHI_TIET_SAN_PHAM_THANH_CONG,
   LOI_LAY_CHI_TIET_SAN_PHAM,
 } from "../actions";
+import { useLocation } from "react-router";
 
 const initialState = {
   isSidebarOpen: false,
@@ -23,11 +24,11 @@ const initialState = {
   single_product_error: false,
   single_product: {},
 };
-
 const ProductsContext = React.createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [page, setPage] = useState(1);
 
   const openSidebar = () => {
     dispatch({ type: SIDEBAR_OPEN });
@@ -35,23 +36,32 @@ export const ProductsProvider = ({ children }) => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
-
+  // const location = useLocation();
   const laySanPham = async (url) => {
     dispatch({ type: BAT_DAU_LAY_SAN_PHAM });
+
+    // const query = location.search;
+    // if (query === "") {
+    //   query = `?page = {page}`;
+    // } else {
+    //   query += `&page = {page}`;
+    // }
     try {
+      // const response = await axios.get(`${url}${query}`);
       const response = await axios.get(url);
       const products = response.data.results;
 
       dispatch({ type: LAY_SAN_PHAM_THANH_CONG, payload: products });
     } catch (error) {
       dispatch({ type: LAY_SAN_PHAM_THAT_BAI });
-      console.log(error);
     }
   };
   useEffect(() => {
     laySanPham(url);
   }, []);
-
+  const paging = (inc) => {
+    setPage(page + inc);
+  };
   const layChiTietSanPham = async (id) => {
     dispatch({ type: BAT_DAU_LAY_CHI_TIET_SAN_PHAM });
     try {
@@ -97,6 +107,7 @@ export const ProductsProvider = ({ children }) => {
         openSidebar,
         closeSidebar,
         layChiTietSanPham,
+        paging,
       }}
     >
       {children}

@@ -1,5 +1,4 @@
 import React from "react";
-// import { PageHero} from "../components";
 import Register from '../components/Register';
 import styled from "styled-components";
 import { PageHero } from "../components";

@@ -1,34 +1,15 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { useProductsContext } from '../context/products_context'
-// const ProductImages = ({images=[{url: ''}]}) => {
-  const ProductImages = () => {
-  // const[main,setMain]=useState(images[0])
-  const {
-    single_product: product,
-
-  } = useProductsContext()
-  const {
-    hinhanh
-  }=product
+import React from "react";
+import styled from "styled-components";
+import { useProductsContext } from "../context/products_context";
+const ProductImages = () => {
+  const { single_product: product } = useProductsContext();
+  const { hinhanh } = product;
   return (
     <Wrapper>
-      <img src={hinhanh} alt='main ' className='main'/>
-      {/* <div className='gallery'>
-        {images.map((image,index)=>{
-          return(
-          <img 
-            src={image.url} 
-            alt={image.filename} 
-            key={index} 
-            onClick={()=>setMain(images[index])}
-            className={`${image.url === main.url? 'active' : null}`}
-          />)
-        })}
-      </div> */}
+      <img src={hinhanh} alt="main " className="main" />
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   .main {
@@ -73,6 +54,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default ProductImages
+export default ProductImages;

@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useFilterContext } from "../context/filter_context";
-import { getUniqueValues, formatPrice, getUniqueLoaiHang } from "../utils/helpers";
+import {
+  getUniqueValues,
+  formatPrice,
+  getUniqueLoaiHang,
+} from "../utils/helpers";
 import { FaCheck } from "react-icons/fa";
 
 const Filters = () => {
@@ -14,13 +18,11 @@ const Filters = () => {
       dongianiemyet,
       max_price,
       shipping,
-      stock,
     },
     updateBoLoc,
     clearFilters,
     all_products,
   } = useFilterContext();
-  console.log(mausac);
   const cacLoaiHang = getUniqueLoaiHang(all_products, "loaihang");
 
   const colors = getUniqueValues(all_products, "mausac");
@@ -40,28 +42,8 @@ const Filters = () => {
             />
           </div>
           {/* end search input */}
-          {/* {categories} */}
-          {/* <div className="form-control">
-            <h5>Loại sản phẩm</h5>
-            <div>
-              {categories.tenloaihang.map((c, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={updateBoLoc}
-                    name="loaihang"
-                    type="button"
-                    className={`${loaihang === c ? "active" : null}`}
-                  >
-                    {c}
-                  </button>
-                );
-              })}
-            </div>
-          </div> */}
-          {/* {end of categories} */}
 
-          {/* {companies} */}
+          {/* {loai hang} */}
           <div className=" form-control">
             <h5>Loại hàng</h5>
             <select
@@ -79,9 +61,9 @@ const Filters = () => {
               })}
             </select>
           </div>
-          {/* {end of companies} */}
+          {/* {end of loaihang} */}
 
-          {/* {colors} */}
+          {/* {mau sac} */}
           <div className="form-control">
             <h5>Màu sắc</h5>
             <div className="colors">
@@ -117,7 +99,7 @@ const Filters = () => {
               })}
             </div>
           </div>
-          {/* {end of colors} */}
+          {/* {end of mausac} */}
 
           {/* {price} */}
           <div className="form-control">
