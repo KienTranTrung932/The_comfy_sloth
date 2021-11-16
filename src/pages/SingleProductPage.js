@@ -26,6 +26,7 @@ const SingleProductPage = () => {
   const [comments, setComments] = useState([]);
   const user = useSelector((state) => state.user.user);
   const [commentContent, setCommentContent] = useState(null);
+  const [changed, setChanged] = useState(1);
   const { id } = useParams();
   const history = useHistory();
   const {
@@ -99,19 +100,22 @@ const SingleProductPage = () => {
         }
       );
       console.info(res.data);
+      comments.push(res.data);
+      setComments(comments);
+      setChanged(comments.length);
     } catch (err) {
       console.info(err);
     }
   };
 
   useEffect(() => {
-    layChiTietSanPham(id);
     // eslint-disable-next-line
+    layChiTietSanPham(id);
     setRating(id);
     setView(id);
     addComment(id);
     loadComments(id);
-  }, [id]);
+  }, [id, changed]);
 
   useEffect(() => {
     if (error) {
@@ -150,34 +154,38 @@ const SingleProductPage = () => {
   if (user !== null && user !== undefined) {
     comment = (
       <>
-        <Form onSubmit={addComment}>
-          <Form.Group controlId="commentContent">
-            <Form.Control
-              className="comment"
-              as="textarea"
-              placeholder="Nhập bình luận"
-              rows={3}
-              value={commentContent}
-              onChange={(event) => setCommentContent(event.target.value)}
-            />
-          </Form.Group>
-          <Button className="cmt-btn" type="submit">
-            Thêm bình luận
-          </Button>
-        </Form>
-        {comments.map((c) => (
-          <Row className="show-cmt">
-            <Col md={11} xs={9}>
-              <p>
-                <em>{c.noidung}</em>
-              </p>
-              <p>Bình luận bởi: {c.nguoinhanxet.username}</p>
-              <p>
-                Vào lúc:<Moment fromNow>{c.created_date}</Moment>
-              </p>
-            </Col>
-          </Row>
-        ))}
+        <div className="form-cmt">
+          <Form onSubmit={addComment}>
+            <Form.Group controlId="commentContent">
+              <Form.Control
+                className="comment"
+                as="textarea"
+                placeholder="Nhập bình luận"
+                rows={3}
+                value={commentContent}
+                onChange={(event) => setCommentContent(event.target.value)}
+              />
+            </Form.Group>
+            <Button className="cmt-btn" type="submit">
+              Thêm bình luận
+            </Button>
+          </Form>
+          <section className="show-cmt">
+            {comments.map((c) => (
+              <Row className="cmt">
+                <Col md={11} xs={9}>
+                  <h5>
+                    <em>{c.noidung}</em>
+                  </h5>
+                  <p>Bình luận bởi: {c.nguoinhanxet.username}</p>
+                  <p>
+                    Vào lúc: <Moment fromNow>{c.created_date}</Moment>
+                  </p>
+                </Col>
+              </Row>
+            ))}
+          </section>
+        </div>
       </>
     );
   }
@@ -223,11 +231,19 @@ const Wrapper = styled.main`
     gap: 4rem;
     margin-top: 2rem;
   }
+  .form-cmt {
+    display:flex;
+    padding: 1rem;
+  }
   .cmt-btn {
     margin-left: 2rem;
   }
   .show-cmt {
-    padding: 0.5rem;
+    padding: 1rem;
+  }
+  .cmt{
+    padding: 1rem;
+    margin 0.5rem 1rem;
   }
   .price {
     color: var(--clr-primary-5);
@@ -261,16 +277,5 @@ const Wrapper = styled.main`
     }
   }
 `;
-const Wrapper2 = styled.div`
-  display: flex;
-  align-items: center;
-  p {
-    margin-left: 0.5rem;
-    margin-bottom: 0;
-  }
-  margin-bottom: 0.5rem;
-  input[type="radio"] {
-    display: none;
-  }
-`;
+
 export default SingleProductPage;

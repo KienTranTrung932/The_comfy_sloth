@@ -34,13 +34,13 @@ const AddToCart = ({ product }) => {
   return (
     <Wrapper>
       <div className="colors">
-        <span> mau sac : </span>
+        <span> màu sắc : </span>
         <div>
           {mausac.map((mausac, index) => {
             return (
               <button
                 key={index}
-                style={{ background: mausac }}
+                style={{ background: mausac.name}}
                 className={`${
                   mainColor === mausac ? "color-btn active" : "color-btn"
                 }`}

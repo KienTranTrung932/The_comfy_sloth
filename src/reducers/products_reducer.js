@@ -21,7 +21,7 @@ const products_reducer = (state, action) => {
   }
   if (action.type === LAY_SAN_PHAM_THANH_CONG) {
     const featured_products = action.payload.filter(
-      (product) => product.shipping === true
+      (product) => product.noibat === true
     );
     return {
       ...state,

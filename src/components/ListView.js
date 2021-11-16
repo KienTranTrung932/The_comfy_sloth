@@ -14,7 +14,7 @@ const ListView = ({products}) => {
             <h4>{tensp}</h4>
             <h5 className='price'>{formatPrice(dongianiemyet)}</h5>
             <p>{mota.substring(0.150)}...</p>
-            <Link to={`/products/${id}`} className='btn'>
+            <Link to={`/SanPham/${id}`} className='btn'>
               Chi tiết
             </Link>
           </div>

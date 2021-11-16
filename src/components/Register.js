@@ -45,6 +45,7 @@ const Register = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    // windowconsole.info("Bạn nhập sai thông tin");
   };
 
   // const normFile = (e) => {
